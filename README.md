@@ -29,7 +29,27 @@ Built with **Java 22**, **Spring Boot 3.3.4**, **Spring Data JPA**, **MySQL 8.0*
 
 ---
 
-## 2. Technology Stack
+## 2. Application Screenshots & UI Demo
+
+### Module 1: Patient Registration & Directory
+*Registration form with demographic validation, real-time patient directory, and search.*
+![Patient Registration](screenshots/01_patient_registration.png)
+
+### Module 2 & 3: Clinical Consultation & Vitals Tracking
+*Active consultation recording blood pressure, temperature, clinical notes, and state management.*
+![Consultation Form](screenshots/03_consultation_summary.png)
+
+### Appointment Selection & Workflow
+*Selecting today's scheduled appointments for active clinical examination.*
+![Appointment Selection](screenshots/02_appointment_selection.png)
+
+### Backend Service Startup
+*Spring Boot 3.3.4 running on Java 22 with MySQL connectivity on port 8080.*
+![Backend Startup](screenshots/04_backend_startup.png)
+
+---
+
+## 3. Technology Stack
 
 | Layer | Technology | Purpose |
 |---|---|---|
@@ -45,7 +65,7 @@ Built with **Java 22**, **Spring Boot 3.3.4**, **Spring Data JPA**, **MySQL 8.0*
 
 ---
 
-## 3. Architecture & Design Decisions
+## 4. Architecture & Design Decisions
 
 ```
 Angular 19 Client (Port 4200)
@@ -84,7 +104,7 @@ Angular 19 Client (Port 4200)
 
 ---
 
-## 4. Getting Started
+## 5. Getting Started
 
 ### Prerequisites
 - **JDK 17, 21, or 22** installed
@@ -128,14 +148,14 @@ The frontend will open and run on **`http://localhost:4200`**.
 
 ---
 
-## 5. Documentation & Technical Guides
+## 6. Documentation & Technical Guides
 
 - **[REST API Contract](backend/API_CONTRACT.md)**: Full endpoint specification, request bodies, response shapes, and TypeScript interfaces.
 - **[Database DDL Schema](backend/schema.sql)**: Production-ready MySQL table definitions, foreign keys, and indexes.
 
 ---
 
-## 6. Verification & Automated Tests
+## 7. Verification & Automated Tests
 
 The application includes an automated test suite verifying all 3 modules against business rules, edge cases, and validations:
 - **Patient Tests**: Registration, Bean Validation, Search by Name/Phone, Missing ID handling.
