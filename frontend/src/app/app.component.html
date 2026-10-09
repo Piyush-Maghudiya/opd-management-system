@@ -1,0 +1,28 @@
+<div class="app-shell">
+  <header class="top-header">
+    <div class="brand">
+      <span class="brand-icon" aria-hidden="true">+</span>
+      <div>
+        <h1>OPD Management</h1>
+        <p class="subtitle">Outpatient Department Dashboard</p>
+      </div>
+    </div>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a
+        *ngFor="let item of navItems"
+        [routerLink]="item.path"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >{{ item.label }}</a
+      >
+    </nav>
+  </header>
+
+  <main class="content">
+    <router-outlet />
+  </main>
+
+  <footer class="footer">
+    <small>API: http://localhost:8080/api · Angular frontend for OPD assignment</small>
+  </footer>
+</div>

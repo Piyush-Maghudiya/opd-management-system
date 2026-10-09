@@ -1,0 +1,93 @@
+<section class="page">
+  <header class="page-header">
+    <h2>Patient Registration</h2>
+    <p>Register new patients and search the OPD patient list.</p>
+  </header>
+
+  <div class="alert success" *ngIf="successMessage">{{ successMessage }}</div>
+  <div class="alert error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <div class="card">
+    <h3>New Patient</h3>
+    <form [formGroup]="form" (ngSubmit)="submit()" class="form-grid">
+      <div class="field">
+        <label for="name">Name *</label>
+        <input id="name" type="text" formControlName="name" placeholder="Full name" />
+        <span class="field-error" *ngIf="fieldError('name')">{{ fieldError('name') }}</span>
+      </div>
+
+      <div class="field">
+        <label for="gender">Gender *</label>
+        <select id="gender" formControlName="gender">
+          <option value="" disabled>Select gender</option>
+          <option *ngFor="let g of genders" [value]="g">{{ g }}</option>
+        </select>
+        <span class="field-error" *ngIf="fieldError('gender')">{{ fieldError('gender') }}</span>
+      </div>
+
+      <div class="field">
+        <label for="age">Age *</label>
+        <input id="age" type="number" formControlName="age" min="1" max="150" />
+        <span class="field-error" *ngIf="fieldError('age')">{{ fieldError('age') }}</span>
+      </div>
+
+      <div class="field">
+        <label for="phone">Phone *</label>
+        <input id="phone" type="tel" formControlName="phone" placeholder="e.g. 9876543210" />
+        <span class="field-error" *ngIf="fieldError('phone')">{{ fieldError('phone') }}</span>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn primary" [disabled]="submitting">
+          {{ submitting ? 'Registering…' : 'Register Patient' }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card">
+    <div class="toolbar">
+      <h3>Patient List</h3>
+      <div class="search-row">
+        <input
+          type="search"
+          [(ngModel)]="searchTerm"
+          [ngModelOptions]="{ standalone: true }"
+          placeholder="Search by name or phone"
+          (keyup.enter)="onSearch()"
+        />
+        <button type="button" class="btn secondary" (click)="onSearch()">Search</button>
+        <button type="button" class="btn ghost" (click)="clearSearch()">Clear</button>
+      </div>
+    </div>
+
+    <div class="loading" *ngIf="loadingList">Loading patients…</div>
+
+    <div class="empty" *ngIf="!loadingList && patients.length === 0">
+      No patients found. Register a patient or adjust your search.
+    </div>
+
+    <div class="table-wrap" *ngIf="!loadingList && patients.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Age</th>
+            <th>Phone</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of patients">
+            <td>{{ p.id }}</td>
+            <td>{{ p.name }}</td>
+            <td>{{ p.gender }}</td>
+            <td>{{ p.age }}</td>
+            <td>{{ p.phone }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

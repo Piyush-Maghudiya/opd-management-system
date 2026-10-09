@@ -1,0 +1,89 @@
+<section class="page">
+  <header class="page-header">
+    <h2>Appointment Booking</h2>
+    <p>Book OPD appointments and view today&apos;s schedule.</p>
+  </header>
+
+  <div class="alert success" *ngIf="successMessage">{{ successMessage }}</div>
+  <div class="alert error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <div class="card">
+    <h3>Book Appointment</h3>
+    <form [formGroup]="form" (ngSubmit)="submit()" class="form-grid">
+      <div class="field">
+        <label for="patientId">Patient *</label>
+        <select id="patientId" formControlName="patientId" [disabled]="loadingPatients">
+          <option [ngValue]="null" disabled>Select patient</option>
+          <option *ngFor="let p of patients" [ngValue]="p.id">{{ p.name }} ({{ p.phone }})</option>
+        </select>
+        <span class="hint" *ngIf="loadingPatients">Loading patients…</span>
+        <span class="field-error" *ngIf="fieldError('patientId')">{{ fieldError('patientId') }}</span>
+        <span class="hint" *ngIf="!loadingPatients && patients.length === 0">
+          No patients yet. Register patients on the Patient Registration page first.
+        </span>
+      </div>
+
+      <div class="field">
+        <label for="doctorName">Doctor Name *</label>
+        <input id="doctorName" type="text" formControlName="doctorName" placeholder="Dr. Sharma" />
+        <span class="field-error" *ngIf="fieldError('doctorName')">{{ fieldError('doctorName') }}</span>
+      </div>
+
+      <div class="field">
+        <label for="appointmentDate">Date *</label>
+        <input id="appointmentDate" type="date" formControlName="appointmentDate" />
+        <span class="field-error" *ngIf="fieldError('appointmentDate')">{{ fieldError('appointmentDate') }}</span>
+      </div>
+
+      <div class="field">
+        <label for="appointmentTime">Time *</label>
+        <input id="appointmentTime" type="time" formControlName="appointmentTime" />
+        <span class="field-error" *ngIf="fieldError('appointmentTime')">{{ fieldError('appointmentTime') }}</span>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn primary" [disabled]="submitting || patients.length === 0">
+          {{ submitting ? 'Booking…' : 'Book Appointment' }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card">
+    <div class="toolbar">
+      <h3>Today&apos;s Appointments</h3>
+      <button type="button" class="btn ghost" (click)="loadTodayAppointments()">Refresh</button>
+    </div>
+
+    <div class="loading" *ngIf="loadingAppointments">Loading appointments…</div>
+
+    <div class="empty" *ngIf="!loadingAppointments && todayAppointments.length === 0">
+      No appointments scheduled for today.
+    </div>
+
+    <div class="table-wrap" *ngIf="!loadingAppointments && todayAppointments.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let a of todayAppointments">
+            <td>{{ a.id }}</td>
+            <td>{{ displayPatientName(a) }}</td>
+            <td>{{ a.doctorName }}</td>
+            <td>{{ a.appointmentDate }}</td>
+            <td>{{ a.appointmentTime }}</td>
+            <td><span class="badge">{{ a.status }}</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
